@@ -18,15 +18,13 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 });
 
 // Optional quick sanity endpoints
-app.MapGet("/", () => Results.Ok("API is running"));
+app.MapGet("/", () => Results.Ok("API is running and CICD is working"));
 app.MapGet("/healthz", () => Results.Ok("healthy"));
 
 // Configure the HTTP request pipeline.
-
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
-
+// enable Swagger out of dev mode (optional)
+app.UseSwagger();
+app.UseSwaggerUI();
 
 
 app.UseHttpsRedirection();
