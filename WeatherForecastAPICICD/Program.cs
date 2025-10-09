@@ -18,7 +18,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 });
 
 // Optional quick sanity endpoints
-app.MapGet("/", () => Results.Ok("API is running and CICD is working"));
+app.MapGet("/", () => Results.Ok("API is running and CICD is work"));
 app.MapGet("/healthz", () => Results.Ok("healthy"));
 
 // Configure the HTTP request pipeline.
