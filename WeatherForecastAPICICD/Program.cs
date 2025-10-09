@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.HttpOverrides;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,12 +11,23 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Trust Azure's proxy headers BEFORE HTTPS redirection
+app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
+    ForwardedHeaders = ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedFor
+});
+
+// Optional quick sanity endpoints
+app.MapGet("/", () => Results.Ok("API is running"));
+app.MapGet("/healthz", () => Results.Ok("healthy"));
+
+// Configure the HTTP request pipeline.
+
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+
+
+
 
 app.UseHttpsRedirection();
 
