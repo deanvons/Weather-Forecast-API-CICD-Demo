@@ -55,12 +55,13 @@ jobs:
 
       - name: Build and tag Docker image
         run: |
-          GIT_SHA=${GITHUB_SHA::7}
-          docker build \
-            --build-arg ASPNETCORE_URLS=http://+:${{ env.PORT }} \
-            -t ${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${GIT_SHA} \
-            -t ${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest \
-            .
+            GIT_SHA=${GITHUB_SHA::7}
+            docker build \
+              -f WeatherForecastAPICICD/Dockerfile \
+              --build-arg ASPNETCORE_URLS=http://+:${{ env.PORT }} \
+              -t ${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:${GIT_SHA} \
+              -t ${{ secrets.ACR_LOGIN_SERVER }}/${{ env.IMAGE_NAME }}:latest \
+              WeatherForecastAPICICD
 
       - name: Push Docker image
         run: |
